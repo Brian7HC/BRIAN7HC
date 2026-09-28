@@ -1,0 +1,23 @@
+name: Update Recent Activity
+
+on:
+  schedule:
+    - cron: '0 */1 * * *' # Automatically runs every hour
+  workflow_dispatch: # Allows you to trigger it manually via a button click
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Update README
+    permissions:
+      contents: write # Grants explicitly required write permissions
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy Activity Log
+        uses: jamesgeorge007/github-activity-readme@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          COMMIT_MSG: "⚡ logs: compiled active user interactions [automated]"
+          MAX_LINES: 5
